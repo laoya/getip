@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "a light packege, get your internal and public ip info",
   "main": "index.js",
+  "bin": "cli.js",
   "scripts": {
     "test": "test"
   },
@@ -25,7 +26,10 @@
   },
   "homepage": "https://github.com/laoya/getip#readme",
   "dependencies": {
+    "chalk": "^4.0.0",
     "dns-socket": "^4.2.0",
-    "is-ip": "^3.1.0"
+    "got": "^11.1.4",
+    "is-ip": "^3.1.0",
+    "meow": "^7.0.1"
   }
 }

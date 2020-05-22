@@ -2,7 +2,7 @@
 const {promisify} = require('util');
 const dgram = require('dgram');
 const dns = require('dns-socket');
-const http = require('http');
+const {get: got, CancelError} = require('got');
 const isIp = require('is-ip');
 
 const defaults = {
@@ -14,7 +14,10 @@ const dnsServers = [
 	{
 		v4: {
 			servers: [
-				'114.114.114.114'
+				'208.67.222.222',
+				'208.67.220.220',
+				'208.67.222.220',
+				'208.67.220.222'
 			],
 			name: 'myip.opendns.com',
 			type: 'A'
@@ -26,6 +29,30 @@ const dnsServers = [
 			],
 			name: 'myip.opendns.com',
 			type: 'AAAA'
+		}
+	},
+	{
+		v4: {
+			servers: [
+				'216.239.32.10',
+				'216.239.34.10',
+				'216.239.36.10',
+				'216.239.38.10'
+			],
+			name: 'o-o.myaddr.l.google.com',
+			type: 'TXT',
+			transform: ip => ip.replace(/"/g, '')
+		},
+		v6: {
+			servers: [
+				'2001:4860:4802:32::a',
+				'2001:4860:4802:34::a',
+				'2001:4860:4802:36::a',
+				'2001:4860:4802:38::a'
+			],
+			name: 'o-o.myaddr.l.google.com',
+			type: 'TXT',
+			transform: ip => ip.replace(/"/g, '')
 		}
 	}
 ];
@@ -77,7 +104,6 @@ const queryDns = (version, options) => {
 
 					// eslint-disable-next-line no-await-in-loop
 					const dnsResponse = await socketQuery({questions: [{name, type}]}, 53, server);
-
 					const {
 						answers: {
 							0: {
