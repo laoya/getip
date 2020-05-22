@@ -1,7 +1,7 @@
 {
   "name": "getip",
   "version": "1.0.0",
-  "description": "a light packege, get your internal and public ip info",
+  "description": "fast way to get your internal and public ip info",
   "main": "index.js",
   "bin": "cli.js",
   "scripts": {
